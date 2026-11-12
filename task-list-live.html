@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Henry’s To Do List</title>
+<style>
+:root{--bg:#f7f2e9;--g1:#e9dfc6;--g2:#f3e3b8;--card:#fffdf9;--text:#26201b;--muted:#736a5f;--accent:#2f6b4f;--accent-text:#fff;--border:#e3dccd;--done:#a39a8d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1815;--g1:#2e2a1c;--g2:#2f2812;--card:#26221e;--text:#efe9df;--muted:#aaa194;--accent:#5fb48a;--accent-text:#0f1a14;--border:#413a31;--done:#7e766a}}
+:root[data-theme="dark"]{--bg:#1b1815;--g1:#2e2a1c;--g2:#2f2812;--card:#26221e;--text:#efe9df;--muted:#aaa194;--accent:#5fb48a;--accent-text:#0f1a14;--border:#413a31;--done:#7e766a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--bg);background-image:radial-gradient(ellipse at center,transparent 50%,rgba(40,30,15,.24) 100%),radial-gradient(circle at 15% 10%,var(--g1) 0,transparent 45%),radial-gradient(circle at 85% 90%,var(--g2) 0,transparent 50%),linear-gradient(160deg,var(--bg),var(--bg));background-attachment:fixed;color:var(--text);font-family:Georgia,"Times New Roman",serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.45 0 0 0 0 0.35 0 0 0 0.35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");background-size:300px 300px,400px 400px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::before{opacity:.28}}
+:root[data-theme="dark"] body::before{opacity:.28}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.08;background-size:720px 720px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 60q15-18 30 0t30 0 30 0 30 0'/%3E%3Cpath d='M300 50c40-30 70 10 30 25-30 10-20-40 20-30 30 8 40 30 70 20'/%3E%3Cpath d='M60 160c40-30 90-20 120 10M165 160l15 12-20 6'/%3E%3Cpath d='M380 150l8 20 22 2-17 14 6 21-19-12-19 12 6-21-17-14 22-2z'/%3E%3Cpath d='M40 260q100-12 200-2M55 272q90-8 160 0'/%3E%3Crect x='300' y='250' width='26' height='26' rx='3'/%3E%3Cpath d='M305 263l8 9 16-20'/%3E%3Cpath d='M40 340q6-10 12 0t12 0 12 0 12 0 12 0M40 358q6-10 12 0t12 0 12 0M40 376q6-10 12 0t12 0 12 0 12 0 12 0 12 0 12 0'/%3E%3Cpath d='M390 360c30-22 62 6 45 36-18 28-62 20-66-10-2-14 8-22 18-26'/%3E%3Cpath d='M100 420l16 16M116 420l-16 16'/%3E%3Cpath d='M240 420c12-10 28 2 20 16-10 14-34 4-30-14 6-22 40-18 44 4'/%3E%3Ccircle cx='200' cy='210' r='2'/%3E%3Ccircle cx='215' cy='214' r='2'/%3E%3Ccircle cx='230' cy='210' r='2'/%3E%3Ccircle cx='440' cy='280' r='2'/%3E%3Cpath d='M180 22c-12 0-20 9-20 20 0 8 5 13 8 18h24c3-5 8-10 8-18 0-11-8-20-20-20zM172 66h16M175 72h10'/%3E%3Cpath d='M440 112c-20-12-24-28-13-34 7-4 13 1 13 7 0-6 6-11 13-7 11 6 7 22-13 34z'/%3E%3Cpath d='M20 120l10-12 10 12 10-12 10 12 10-12 10 12'/%3E%3Crect x='20' y='190' width='14' height='14' rx='2'/%3E%3Cpath d='M42 197h60'/%3E%3Crect x='20' y='212' width='14' height='14' rx='2'/%3E%3Cpath d='M23 219l4 5 8-10M42 219h50'/%3E%3Cpath d='M330 190v20M321 195l18 10M339 195l-18 10'/%3E%3Cpath d='M270 300h16M278 292v16M300 296h16M300 306h16'/%3E%3Ccircle cx='150' cy='300' r='8'/%3E%3Ccircle cx='170' cy='312' r='5'/%3E%3Ccircle cx='140' cy='322' r='4'/%3E%3Cpath d='M420 220c-30 10-50 30-60 60M362 268l-4 14 14-4'/%3E%3Cpath d='M60 452l3 8 8 3-8 3-3 8-3-8-8-3 8-3z'/%3E%3Cpath d='M150 420q8-6 16 0t16 0 16 0 16 0'/%3E%3Cpath d='M300 450q20-14 40 0t40 0 40 0'/%3E%3C/svg%3E")}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::after{filter:url(#messy) invert(1);opacity:.045}}
+:root[data-theme="dark"] body::after{filter:url(#messy) invert(1);opacity:.045}
+body::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M70 20c-14 14-14 34 0 48c14-14 14-34 0-48z'/%3E%3Cpath d='M70 56c-8-14-26-16-34-6-6 10 2 22 14 22 6 0 10-4 12-8M70 56c8-14 26-16 34-6 6 10-2 22-14 22-6 0-10-4-12-8'/%3E%3Cpath d='M52 74h36M54 80h32M70 80v10'/%3E%3Cpath d='M380 40v70M355 62h50M374 40h12M374 110h12M355 56v12M405 56v12'/%3E%3Ccircle cx='380' cy='62' r='14'/%3E%3Cpath d='M170 170V120h10v8h10v-8h10v8h10v-8h10v8h10v-8h10v50z'/%3E%3Cpath d='M198 170v-16c0-12 14-12 14 0v16M205 138v8M240 120v-20l14 6-14 6'/%3E%3Cpath d='M50 200h60v34c0 22-20 36-30 42-10-6-30-20-30-42z'/%3E%3Cpath d='M80 206v66M54 226h52'/%3E%3Cpath d='M320 215l60 60M380 215l-60 60M362 277l20-20M318 257l20 20'/%3E%3Ccircle cx='381' cy='276' r='3'/%3E%3Ccircle cx='319' cy='276' r='3'/%3E%3Cpath d='M55 385L50 345l22 17 18-27 18 27 22-17-5 40zM55 395h70'/%3E%3Ccircle cx='50' cy='343' r='3'/%3E%3Ccircle cx='90' cy='333' r='3'/%3E%3Ccircle cx='130' cy='343' r='3'/%3E%3Cpath d='M350 440C372 410 392 385 420 365c-4 25-20 48-42 62-8 6-18 12-28 13zM350 440l60-70M372 412l14 4M388 396l14 4'/%3E%3Cpath d='M200 330c14-20 28 20 42 0s28 20 42 0 28 20 42 0'/%3E%3Cpath d='M250 420c10-14 28-6 24 10-4 14-24 12-26-2-2-14 14-20 24-10'/%3E%3Ccircle cx='440' cy='180' r='8'/%3E%3Ccircle cx='440' cy='200' r='8'/%3E%3Ccircle cx='430' cy='190' r='8'/%3E%3Ccircle cx='450' cy='190' r='8'/%3E%3Ccircle cx='440' cy='190' r='2'/%3E%3Cpath d='M30 160v16M22 168h16M30 430h70M30 440h58M30 450h66'/%3E%3C/svg%3E")}
+body::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='30' y='30' width='160' height='110'/%3E%3Crect x='36' y='36' width='148' height='98'/%3E%3Cpath d='M110 36v30M110 80v54M110 86h74M110 80h14M124 80a14 14 0 0 0-14-14'/%3E%3Crect x='60' y='28' width='26' height='10'/%3E%3Cpath d='M30 160h160M30 154v12M190 154v12M100 166h20'/%3E%3Cpath d='M270 150V85Q270 50 310 30Q350 50 350 85V150z'/%3E%3Cpath d='M280 150V88Q280 60 310 44Q340 60 340 88V150'/%3E%3Cpath d='M310 20v140M262 88h96' stroke-dasharray='5 4'/%3E%3Cpath d='M262 165h96M262 159v12M358 159v12'/%3E%3Cpath d='M408 40h44v8h-44zM416 48h28l-4 8h-20zM422 56v80M438 56v80M430 58v76M416 136h28v6h-28zM410 142h40v8h-40z'/%3E%3Crect x='420' y='170' width='50' height='40'/%3E%3Cpath d='M426 210l36-36M440 210l30-30M454 210l16-16M420 196l20-20'/%3E%3Cpath d='M60 260l40-20 40 20v50l-40 20-40-20z'/%3E%3Cpath d='M60 260l40 20 40-20M100 280v50M70 290l12 6v12l-12-6z'/%3E%3Cpath d='M200 330h20v-16h20v-16h20v-16h20v-16h20v-16h20M200 346L300 282M200 330v16'/%3E%3Ccircle cx='400' cy='270' r='20'/%3E%3Cpath d='M400 290V250l-6 10M400 250l6 10M394 238v-10l12 10v-10'/%3E%3Cpath d='M40 440L115 390 190 440zM115 390v50M77 415L115 440 153 415'/%3E%3Cpath d='M230 430h100M230 424v12M255 426v8M280 424v12M305 426v8M330 424v12'/%3E%3Cpath d='M360 400a50 50 0 0 1 100 0M410 400L375 365M410 400L445 365M410 400v-50M350 400h120M20 360h440' stroke-dasharray='5 4'/%3E%3C/svg%3E")}
+body::after{background-size:840px 840px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cdefs%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='5'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23w)'%3E%3Cg id='a'%3E%3Crect x='30' y='30' width='160' height='110'/%3E%3Crect x='36' y='36' width='148' height='98'/%3E%3Cpath d='M110 36v30M110 80v54M110 86h74M110 80h14M124 80a14 14 0 0 0-14-14'/%3E%3Crect x='60' y='28' width='26' height='10'/%3E%3Cpath d='M30 160h160M30 154v12M190 154v12M100 166h20'/%3E%3Cpath d='M270 150V85Q270 50 310 30Q350 50 350 85V150z'/%3E%3Cpath d='M280 150V88Q280 60 310 44Q340 60 340 88V150'/%3E%3Cpath d='M310 20v140M262 88h96' stroke-dasharray='5 4'/%3E%3Cpath d='M262 165h96M262 159v12M358 159v12'/%3E%3Cpath d='M408 40h44v8h-44zM416 48h28l-4 8h-20zM422 56v80M438 56v80M430 58v76M416 136h28v6h-28zM410 142h40v8h-40z'/%3E%3Crect x='420' y='170' width='50' height='40'/%3E%3Cpath d='M426 210l36-36M440 210l30-30M454 210l16-16M420 196l20-20'/%3E%3Cpath d='M60 260l40-20 40 20v50l-40 20-40-20z'/%3E%3Cpath d='M60 260l40 20 40-20M100 280v50M70 290l12 6v12l-12-6z'/%3E%3Cpath d='M200 330h20v-16h20v-16h20v-16h20v-16h20v-16h20M200 346L300 282M200 330v16'/%3E%3Ccircle cx='400' cy='270' r='20'/%3E%3Cpath d='M400 290V250l-6 10M400 250l6 10M394 238v-10l12 10v-10'/%3E%3Cpath d='M40 440L115 390 190 440zM115 390v50M77 415L115 440 153 415'/%3E%3Cpath d='M230 430h100M230 424v12M255 426v8M280 424v12M305 426v8M330 424v12'/%3E%3Cpath d='M360 400a50 50 0 0 1 100 0M410 400L375 365M410 400L445 365M410 400v-50M350 400h120M20 360h440' stroke-dasharray='5 4'/%3E%3Cpath d='M500 120a45 45 0 0 1 90 0M500 120v30h90v-30M545 75v-15M538 60h14M545 120V75M525 120c0-30 8-40 20-45M565 120c0-30-8-40-20-45M492 150h106'/%3E%3Cpath d='M490 200L545 250M490 300L545 250M600 200L545 250M600 300L545 250M485 250h115M500 215h20v70h-20zM570 225h20v50h-20z'/%3E%3Cpath d='M500 340q25-18 50 0v60h-50zM500 360h50M525 332v68M495 400h60v5h-60z'/%3E%3Cpath d='M560 520V450l15-30 15 30v70zM560 450h30M575 420v-14M570 406h10M568 480v14h14v-14z'/%3E%3Cpath d='M20 520h300M20 530h300M40 560a30 30 0 0 1 60 0M110 560a30 30 0 0 1 60 0M180 560a30 30 0 0 1 60 0M250 560a30 30 0 0 1 60 0M40 530v30M100 530v30M110 530v30M170 530v30M180 530v30M240 530v30M250 530v30M310 530v30M20 575q10-6 20 0t20 0 20 0 20 0 20 0 20 0 20 0'/%3E%3Cpath d='M350 580V540L410 505 470 540V580zM395 580v-25h22v25M360 550h18v14h-18zM442 550h18v14h-18zM440 520v-22h14v34'/%3E%3Ccircle cx='265' cy='480' r='26'/%3E%3Ccircle cx='265' cy='480' r='6'/%3E%3Cpath d='M271 480h20M265 486v20M259 480h-20M265 474v-20M269 484l14 14M261 484l-14 14M261 476l-14-14M269 476l14-14'/%3E%3Ccircle cx='130' cy='480' r='22'/%3E%3Ccircle cx='130' cy='480' r='6'/%3E%3Cpath d='M130 458v16M130 486v16M108 480h16M136 480h16M114 464l11 11M146 496l-11-11M146 464l-11 11M114 496l11-11'/%3E%3Ccircle cx='226' cy='60' r='9'/%3E%3Cpath d='M222 65l4-10 4 10M223 62h6'/%3E%3Cpath d='M226 69v90' stroke-dasharray='5 4'/%3E%3Cpath d='M200 200h70v40h-70zM200 210h70M200 220h70M200 230h70M215 200v10M240 200v10M227 210v10M252 210v10M215 220v10M240 220v10M227 230v10M252 230v10'/%3E%3Ccircle cx='160' cy='205' r='4'/%3E%3Cpath d='M160 209v18M160 214l-8 8M160 214l8 8M160 227l-6 14M160 227l6 14'/%3E%3Ccircle cx='340' cy='345' r='4'/%3E%3Cpath d='M340 349v18M340 354l-8 8M340 354l8 8M340 367l-6 14M340 367l6 14'/%3E%3C/g%3E%3Cuse href='%23a' transform='translate(2 -1.6) rotate(0.3)' opacity='.5'/%3E%3C/g%3E%3C/svg%3E")}
+body::after{background-size:840px 840px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' fill='none' stroke='black' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cdefs%3E%3Cfilter id='w' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='5'/%3E%3C/filter%3E%3Cg id='p'%3E%3Cpath d='M120 250V340M120 250L70 275V320L120 340M120 250L190 275V320L120 340M120 250L70 275L133 283L190 275zM70 320L120 340L190 320M70 275v45M190 275v45'/%3E%3Cpath d='M20 300h240M120 250L20 300M120 340L20 300M120 250L260 300M120 340L260 300' stroke-dasharray='5 4'/%3E%3Ccircle cx='20' cy='300' r='3'/%3E%3Ccircle cx='260' cy='300' r='3'/%3E%3C/g%3E%3C/defs%3E%3Cg filter='url(%23w)'%3E%3Cg id='a'%3E%3Cpath d='M90 40l26 15-26 15-26-15zM64 55v30l26 15 26-15v-30M90 70v30'/%3E%3Cpath d='M150 90l26 15-26 15-26-15zM124 105v30l26 15 26-15v-30M150 120v30'/%3E%3Cpath d='M70 110l26 15-26 15-26-15zM44 125v30l26 15 26-15v-30M70 140v30'/%3E%3Cpath d='M240 80l26-15M240 80l-26-15M240 80v-30M262 70l4-5-6-1M218 70l-4-5 6-1M236 54l4-4 4 4'/%3E%3Cpath d='M40 330L56 321V307L72 298V284L88 275V261L104 252V238M71 348L87 339V325L103 316V302L119 293V279L135 270V256M40 330L71 348M56 321L87 339M56 307L87 325M72 298L103 316M72 284L103 302M88 275L119 293M88 261L119 279M104 252L135 270M104 238L135 256M40 330v16l31 18M71 348v16M71 364L135 327V256'/%3E%3Cpath d='M304 275L317 253.5L343 268.5L356 275L330 290ZM343 268.5L330 290M304 275v30l26 15 26-15v-30M330 290v30M312 292l8 4v10l-8-4z'/%3E%3Cpath d='M235 330l26 15-26 15-26-15zM209 345v30l26 15 26-15v-30M235 360v30'/%3E%3Cpath d='M500 150l26 15-26 15-26-15zM474 165v100l26 15 26-15V165M500 180v100M500 200l26-15M500 220l26-15M500 240l26-15M500 260l26-15M500 200l-26-15M500 220l-26-15M500 240l-26-15M500 260l-26-15'/%3E%3Cpath d='M550 200l26 15-26 15-26-15zM524 215v60l26 15 26-15v-60M550 230v60'/%3E%3Cellipse cx='350' cy='455' rx='22' ry='13'/%3E%3Cpath d='M328 455v60M372 455v60M328 515a22 13 0 0 0 44 0M328 480a22 13 0 0 0 44 0M328 500a22 13 0 0 0 44 0'/%3E%3Cpath d='M520 430v60M520 490l-52 30M520 490l52 30M468 460v60M572 460v60M520 430l-52 30M520 430l52 30M468 520l52 30 52-30M546 505L494 535M494 505L546 535M505 449L485 460V480L505 469z'/%3E%3Cg transform='translate(10 215)'%3E%3Cpath d='M100 200L60 250L127 267L180 250zM100 200V360M60 250V330M180 250V330M60 330L100 360L180 330M120 226L150 242V255L120 243zM120 313L150 310V324L120 331z'/%3E%3Cpath d='M20 300h240M100 200L20 300M100 360L20 300M100 200L260 300M100 360L260 300' stroke-dasharray='5 4'/%3E%3Ccircle cx='20' cy='300' r='3'/%3E%3Ccircle cx='260' cy='300' r='3'/%3E%3C/g%3E%3Cuse href='%23p' transform='translate(300 -230)'/%3E%3Cuse href='%23p' transform='translate(215 -35) scale(.55)'/%3E%3Cpath d='M10 120L210 5M30 170L230 55M270 300L440 200M250 350L400 262M520 330L590 290M440 300L600 210M64 30v140M176 100v80M335 245v95M474 140v140M526 150v130'/%3E%3Cpath d='M64 65l26 15M64 73l26 15M64 81l26 15M124 115l26 15M124 123l26 15M124 131l26 15M44 346l24 14M48 340l26 15M320 258l18 11M316 264l20 12M312 270l16 10M476 190l22 13M476 215l22 13M476 240l22 13M330 470v40M336 472v40M342 474v40M490 520l26 15M496 516l26 15M80 456v94M90 444v114M100 431v134'/%3E%3Cpath d='M30 372c20-3 60 3 100 0M290 335c30-4 60 3 90 0M440 565c40-4 90 4 140 0M300 560c20-4 70 3 120 0M20 100c30-4 70 4 100 0'/%3E%3Cpath d='M205 300L245 250L285 300M222 275h46M285 232L195 275M285 232v14M277 246h16v16h-16zM195 275L180 289M170 302h140'/%3E%3Ccircle cx='178' cy='292' r='5'/%3E%3Cpath d='M400 421l2-26h36l2 26zM402 395l18-14 18 14M420 421V445M405 445h30M410 421l-8 24M430 421l8 24M420 388L385 353M420 388L455 423M420 388L455 353M420 388L385 423M394 362l9-3M404 372l9-3M446 362l-9-3M436 372l-9-3'/%3E%3Ccircle cx='425' cy='285' r='28'/%3E%3Ccircle cx='425' cy='285' r='5'/%3E%3Cpath d='M425 257v56M397 285h56M405 265l40 40M445 265l-40 40M395 278h-6M395 292h-6M455 278h6M455 292h6M418 257v-6M432 257v-6M418 313v6M432 313v6M360 270h40M360 276h40'/%3E%3Cpath d='M125 215h66M180 190q16 25 0 50M180 190L162 215L180 240M150 215v10M174 211l6 4-6 4'/%3E%3Ccircle cx='500' cy='350' r='24'/%3E%3Ccircle cx='500' cy='350' r='8'/%3E%3Cpath d='M524 350h7M521 362l6 3.5M512 371l3.5 6M500 374v7M488 371l-3.5 6M479 362l-6 3.5M476 350h-7M479 338l-6-3.5M488 329l-3.5-6M500 326v-7M512 329l3.5-6M521 338l6-3.5M500 326v48M476 350h48'/%3E%3Ccircle cx='545' cy='378' r='18'/%3E%3Ccircle cx='545' cy='378' r='4'/%3E%3Cpath d='M545 360v36M527 378h36'/%3E%3Cpath d='M300 420V345h50v75M310 360h30v8h-30zM300 405h50M325 345v-15M305 330h40M345 330l8 10'/%3E%3Ccircle cx='425' cy='185' r='30'/%3E%3Ccircle cx='425' cy='185' r='22'/%3E%3Ccircle cx='425' cy='185' r='3'/%3E%3Ccircle cx='425' cy='146' r='5'/%3E%3Cpath d='M425 163v44M403 185h44M403 185a22 14 0 0 1 44 0M410 170a15 15 0 0 0 30 0'/%3E%3Ccircle cx='190' cy='30' r='9'/%3E%3Ccircle cx='212' cy='30' r='9'/%3E%3Cpath d='M199 28q2-4 4 0M181 30l-8-6M221 30l8-6'/%3E%3Cg fill='black' fill-opacity='.22' stroke='none'%3E%3Cpath d='M64 55L90 70V100L64 85zM124 105L150 120V150L124 135zM44 125L70 140V170L44 155zM209 345L235 360V390L209 375zM474 165L500 180V280L474 265zM524 215L550 230V290L524 275zM304 275L330 290V320L304 305zM350 442A22 13 0 0 1 372 455V515A22 13 0 0 1 350 528zM520 430L468 460V520L520 490zM110 415L70 465V545L110 575z'/%3E%3C/g%3E%3C/g%3E%3Cuse href='%23a' transform='translate(1.5 -1) rotate(0.3)' opacity='.45'/%3E%3Cuse href='%23a' transform='translate(-1.5 1.2) rotate(-0.3)' opacity='.35'/%3E%3Cuse href='%23a' transform='translate(1 2) rotate(0.4)' opacity='.25'/%3E%3C/g%3E%3C/svg%3E")}
+body::after{background-size:1550px 1550px;filter:url(#messy);opacity:.055}
+main{display:flex;flex-direction:column;position:relative;z-index:1;max-width:960px;margin:0 auto;padding:28px 16px 40px}
+h1{font-size:1.7rem;margin:0 0 4px}
+.sub{color:var(--muted);font-family:system-ui,sans-serif;font-size:.9rem;margin-bottom:20px}
+form{display:flex;gap:8px;margin-bottom:8px}
+input[type=text]{flex:1;min-width:0;padding:12px;font-size:1rem;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);font-family:system-ui,sans-serif}
+button{font-family:system-ui,sans-serif;font-size:.95rem;border:0;border-radius:10px;padding:12px 16px;cursor:pointer;background:var(--accent);color:var(--accent-text)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.msg{min-height:1.3em;color:var(--muted);font-family:system-ui,sans-serif;font-size:.85rem;margin-bottom:12px}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+li{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+li span{flex:1 1 140px;overflow-wrap:anywhere}
+li.done span{text-decoration:line-through;color:var(--done)}
+li button{padding:8px 12px;font-size:.85rem}
+li.done button.toggle{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.edit{flex:1 1 140px;min-width:0;padding:8px;font-size:1rem;border:1px solid var(--accent);border-radius:8px;background:var(--card);color:var(--text);font-family:system-ui,sans-serif}
+button.del{background:transparent;color:var(--muted);border:1px solid var(--border)}
+button.pend{background:transparent;color:var(--muted);border:1px solid var(--border)}
+button.pend.on{background:#5b8def;color:#fff;border-color:#5b8def}
+li.p-r{border-left:4px solid #d64545}
+li.p-a{border-left:4px solid #e0a020}
+li.p-g{border-left:4px solid #3f9d5f}
+.lights{display:flex;gap:6px}
+.dot{width:22px;height:22px;padding:0;border-radius:50%;border:2px solid;background:transparent}
+.dot.r{border-color:#d64545}.dot.r.on{background:#d64545}
+.dot.a{border-color:#e0a020}.dot.a.on{background:#e0a020}
+.dot.g{border-color:#3f9d5f}.dot.g.on{background:#3f9d5f}
+.empty{color:var(--muted);text-align:center;padding:24px 0;font-family:system-ui,sans-serif}
+[hidden]{display:none!important}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.col h2{font-size:1.2rem;margin:0 0 4px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+@media (max-width:640px){.cols{grid-template-columns:1fr}}
+.clocks{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.clock{flex:1 1 140px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-family:system-ui,sans-serif}
+.clock b{display:block;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.cd{font-size:.8rem;color:var(--muted)}
+.ct{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.cw{font-size:.8rem;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+.cw small{display:block;color:var(--muted);margin-top:2px}
+.wbtn{padding:3px 9px;font-size:.72rem;border-radius:6px;margin-left:6px;background:transparent;color:var(--muted);border:1px solid var(--border)}
+.wnote{color:var(--muted);font-family:system-ui,sans-serif;font-size:.72rem;margin:-8px 0 16px}
+.fix{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:16px;font-family:system-ui,sans-serif}
+.fix .ft{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.fix .fh{font-size:.8rem;color:var(--muted);margin-top:10px}
+.fix .fm{font-size:1rem;margin-top:2px}
+.fix .fm small{color:var(--muted);margin-left:6px}
+.fix .fl2{font-size:.85rem;margin:8px 0 0}
+.fix .fxl{background:rgba(127,127,127,.06);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.fix .fxr{background:rgba(127,127,127,.06);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.fix .fxg{display:grid;grid-template-columns:repeat(3,1fr);gap:0 28px}
+@media (max-width:900px){.fix .fxg{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.fix .fxg{grid-template-columns:1fr}}
+.fix .fl2 .lh{font-size:.8rem;color:var(--muted);margin-top:8px}
+.fix .fl2 .lm{margin-top:2px}
+.fix .fl2 .lt{font-weight:600;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fix .fn{font-size:.72rem;color:var(--muted);margin-top:10px}
+.fix .fl{font-size:.85rem;color:var(--muted);margin-top:4px;line-height:1.5}
+.fix{order:99;align-self:center;width:min(1000px,calc(100vw - 48px));margin:28px 0 0;display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+.fix .ft,.fix .fn{grid-column:1/-1}
+.fix .fs .fh{margin-top:8px}
+@media (max-width:720px){.fix,.fxg{grid-template-columns:1fr}}
+.fix{position:relative;z-index:1;margin:0 auto 40px}
+.tab{flex:1;background:transparent;color:var(--muted);border:1px solid var(--border)}
+.tab.on{background:var(--accent);color:var(--accent-text);border-color:var(--accent)}
+li small{display:block;color:var(--muted);font-family:system-ui,sans-serif;font-size:.78rem;margin-top:2px}
+.clear{margin-top:16px;background:transparent;color:var(--muted);border:1px solid var(--border)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="messy" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter></svg>
+<main>
+<h1>Henry’s To Do List</h1>
+<div class="clocks"><div class="clock"><b>Cairo</b><div class="cd" id="cad"></div><div class="ct" id="cat"></div><div class="cw" id="caw">Loading weather…</div></div><div class="clock"><b>UK</b><div class="cd" id="ukd"></div><div class="ct" id="ukt"></div><div class="cw" id="ukw">Loading weather…</div></div><div class="clock"><b>Burbank</b><div class="cd" id="bud"></div><div class="ct" id="but"></div><div class="cw" id="buw">Loading weather…</div></div></div>
+<div class="wnote"><span id="wupd">Weather: loading…</span> <button type="button" id="wref" class="wbtn">Refresh weather</button></div>
+<div class="tabs"><button type="button" class="tab on" id="tabT">Tasks</button><button type="button" class="tab" id="tabH">History <span id="hc"></span></button></div>
+<div id="tasksView">
+<div class="cols">
+<section class="col"><h2>Work</h2><div class="sub" id="count-work"></div><form id="f-work"><input type="text" id="t-work" placeholder="Add a work task…" maxlength="120" autocomplete="off"><button type="submit" id="add-work">Add</button></form><div class="msg" id="msg-work"></div><ul id="list-work"></ul><button class="clear" id="clr-work" type="button">Clear completed</button></section>
+<section class="col"><h2>Home</h2><div class="sub" id="count-home"></div><form id="f-home"><input type="text" id="t-home" placeholder="Add a home task…" maxlength="120" autocomplete="off"><button type="submit" id="add-home">Add</button></form><div class="msg" id="msg-home"></div><ul id="list-home"></ul><button class="clear" id="clr-home" type="button">Clear completed</button></section>
+</div>
+</div>
+<div id="histView" hidden>
+<div class="sub" id="hsub"></div>
+<ul id="hlist"></ul>
+<button class="clear" id="hclr" type="button">Clear history</button>
+</div>
+</main>
+<div class="fix"><div class="fxl"><div class="ft">Live today</div><div><button type="button" id="sref" class="wbtn" style="margin-left:0">Refresh sports</button><span id="supd" style="font-size:.72rem;color:var(--muted)">Live feed not loaded yet.</span></div><div class="fl2" id="slive"></div></div><div class="fxr"><div class="ft">Fixtures and schedule</div><div class="fxg"><div class="fs"><div class="fh">🏉 Premiership Rugby</div><div class="fm">No matches today<small>League paused in November for the Nations Championship</small></div></div><div class="fs"><div class="fh">🏉 International rugby</div><div class="fm">No Tests today<small>Next: Nations Championship, 13–15 Nov</small></div><div class="fl">Fri 13 · 8:10pm France v South Africa<br>Sat 14 · 11:40am Italy v Argentina<br>Sat 14 · 2:10pm Wales v New Zealand<br>Sat 14 · 4:40pm England v Japan<br>Sat 14 · 8:10pm Ireland v Fiji<br>Sun 15 · 3:10pm Scotland v Australia<br>Sat 21 · 2:10pm England v New Zealand<br>Sat 21 · 2:10pm Scotland v Japan<br>27–29 Nov · Finals weekend, Twickenham</div></div><div class="fs"><div class="fh">⚽ Premier League</div><div class="fm">No matches today<small>Next fixtures: Sat 21 Nov</small></div><div class="fl">Sat 21 · 12:30pm Man City v Fulham<br>Sat 21 · 3:00pm Aston Villa v Sunderland<br>Sat 21 · 3:00pm Bournemouth v Nottingham Forest<br>Sat 21 · 3:00pm Chelsea v Leeds<br>Sat 21 · 3:00pm Coventry v Crystal Palace<br>Sat 21 · 3:00pm Tottenham v Ipswich<br>Sat 21 · 5:30pm Newcastle v Arsenal<br>Sun 22 · 2:00pm Hull City v Brighton<br>Sun 22 · 4:30pm Liverpool v Man Utd<br>Mon 23 · 8:00pm Brentford v Everton</div></div><div class="fs"><div class="fh">🎯 Darts</div><div class="fm">No PDC events today<small>Next: Grand Slam of Darts, Sat 14 Nov</small></div><div class="fl">14 – 22 Nov · Grand Slam of Darts, Wolverhampton<br>27 – 29 Nov · Players Championship Finals, Minehead<br>10 Dec – 3 Jan · World Championship, Alexandra Palace</div></div><div class="fs"><div class="fh">🏉 Super League</div><div class="fm">Season finished<small>Wakefield Trinity beat Warrington 23–10 in the Grand Final, 3 Oct</small></div><div class="fl">Next Grand Final: 2 Oct 2027, Old Trafford</div></div><div class="fs"><div class="fh">🏉 International rugby league</div><div class="fm">World Cup final week<small>No matches today</small></div><div class="fl">Sun 15 · 8:35am World Cup final: Australia v New Zealand, Brisbane</div></div><div class="fs"><div class="fh">🎾 Tennis</div><div class="fm">No Grand Slam today<small>This week: Stockholm Open (ATP 250)</small></div><div class="fl">8 – 15 Nov · Stockholm Open (ATP 250)<br>15 – 22 Nov · Nitto ATP Finals, Turin<br>24 – 29 Nov · Davis Cup Finals, Bologna<br><br>2027 Grand Slams and Masters 1000<br>17 – 31 Jan · Australian Open, Melbourne<br>From 3 Mar · Indian Wells Masters<br>From 17 Mar · Miami Open<br>From 4 Apr · Monte-Carlo Masters<br>From 21 Apr · Madrid Open<br>From 5 May · Italian Open, Rome<br>30 May – 13 Jun · French Open, Paris<br>From 28 Jun · Wimbledon, London<br>Late Aug · US Open, New York (dates TBC)</div></div><div class="fs"><div class="fh">⛳ Golf</div><div class="fm">No major today<small>This week: DP World Tour Championship</small></div><div class="fl">12 – 15 Nov · DP World Tour Championship, Dubai<br>12 – 15 Nov · Good Good Championship, Austin (PGA Tour)<br>19 – 22 Nov · RSM Classic, Sea Island (PGA Tour)<br>26 – 29 Nov · BMW Australian PGA Championship, Sydney<br>3 – 6 Dec · Hero World Challenge, Bahamas<br><br>Majors 2027<br>8 – 11 Apr · The Masters, Augusta<br>20 – 23 May · PGA Championship, Frisco<br>17 – 20 Jun · US Open, California<br>15 – 18 Jul · The Open, St Andrews</div></div></div><div class="fn">These sections are a fixed snapshot from Mon 9 Nov 2026. Live fixtures and scores are in the Live today box at the top. Times are UK time.</div></div></div>
+<script>
+var MAX=10,KEY="tasks-v1",tasks=[];
+try{var s=localStorage.getItem(KEY);if(s){tasks=JSON.parse(s)||[]}}catch(e){tasks=[]}
+var HKEY="history-v1",hist=[];
+try{var hs=localStorage.getItem(HKEY);if(hs){hist=JSON.parse(hs)||[]}}catch(e){hist=[]}
+tasks.forEach(function(t){if(!t.id)t.id=Date.now()+"-"+Math.random().toString(36).slice(2);if(t.done&&!hist.some(function(h){return h.id===t.id})){hist.push({id:t.id,text:t.text,at:Date.now()})}});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(tasks));localStorage.setItem(HKEY,JSON.stringify(hist))}catch(e){}}
+var RANK={r:0,a:1,g:2};
+function sorted(){return tasks.map(function(t,i){return[t,i]}).sort(function(x,y){var a=x[0],b=y[0];if(!!a.done!==!!b.done)return a.done?1:-1;var ra=RANK[a.pri]===undefined?3:RANK[a.pri],rb=RANK[b.pri]===undefined?3:RANK[b.pri];return ra-rb||x[1]-y[1]}).map(function(p){return p[0]})}
+var CATS=["work","home"];
+tasks.forEach(function(t){if(!t.cat)t.cat="work"});
+function catOf(t){return t.cat||"work"}
+function render(){
+CATS.forEach(function(cat){
+var list=tasks.filter(function(t){return catOf(t)===cat});
+var ul=document.getElementById("list-"+cat);ul.innerHTML="";
+if(!list.length){var p=document.createElement("div");p.className="empty";p.textContent="No tasks yet.";ul.appendChild(p)}
+sorted().filter(function(t){return catOf(t)===cat}).forEach(function(t){
+var li=document.createElement("li");if(t.done)li.className="done";else li.className=(t.pending?"pending ":"")+(t.pri?"p-"+t.pri:"");
+var sp=document.createElement("span");sp.textContent=t.text;
+var eb=null;
+function startEdit(){
+var inp=document.createElement("input");inp.type="text";inp.className="edit";inp.maxLength=120;inp.value=t.text;inp.setAttribute("aria-label","Edit task");
+var finished=false;
+function commit(){if(finished)return;finished=true;var v=inp.value.trim();if(v)t.text=v;save();render()}
+inp.onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();commit()}else if(e.key==="Escape"){finished=true;render()}};
+inp.onblur=commit;
+li.replaceChild(inp,sp);inp.focus();inp.select();
+}
+if(!t.done){eb=document.createElement("button");eb.type="button";eb.className="del";eb.textContent="\u270E";eb.title="Edit task";eb.setAttribute("aria-label","Edit task");eb.onclick=startEdit;sp.title="Double-click to edit";sp.ondblclick=startEdit}
+var b=document.createElement("button");b.className="toggle";b.textContent=t.done?"Undo":"Complete";
+b.onclick=function(){t.done=!t.done;if(t.done){t.pending=false;hist.unshift({id:t.id,text:t.text,at:Date.now()})}else{hist=hist.filter(function(h){return h.id!==t.id})}save();render()};
+var pb=null;if(!t.done){pb=document.createElement("button");pb.className="pend"+(t.pending?" on":"");pb.textContent="Pending";pb.setAttribute("aria-pressed",t.pending?"true":"false");pb.onclick=function(){t.pending=!t.pending;save();render()}}
+var d=document.createElement("button");d.className="del";d.textContent="\u2715";d.setAttribute("aria-label","Delete task");
+d.onclick=function(){tasks.splice(tasks.indexOf(t),1);save();render()};
+var pr=document.createElement("div");pr.className="lights";[["r","Red: high"],["a","Amber: medium"],["g","Green: low"]].forEach(function(c){var db=document.createElement("button");db.type="button";db.className="dot "+c[0]+(t.pri===c[0]?" on":"");db.title=c[1]+" priority";db.setAttribute("aria-label",c[1]+" priority");db.setAttribute("aria-pressed",t.pri===c[0]?"true":"false");db.onclick=function(){t.pri=t.pri===c[0]?undefined:c[0];save();render()};pr.appendChild(db)});
+li.appendChild(sp);if(!t.done)li.appendChild(pr);if(pb)li.appendChild(pb);li.appendChild(b);if(eb)li.appendChild(eb);li.appendChild(d);ul.appendChild(li)});
+var open=list.filter(function(t){return!t.done}).length;
+document.getElementById("count-"+cat).textContent=list.length+" of "+MAX+" slots used \u00b7 "+open+" to do";
+var full=list.length>=MAX;
+document.getElementById("add-"+cat).disabled=full;
+document.getElementById("t-"+cat).disabled=full;
+document.getElementById("msg-"+cat).textContent=full?"List is full. Complete and clear, or delete a task to add more.":"";
+document.getElementById("clr-"+cat).style.display=list.some(function(t){return t.done})?"":"none";
+});
+renderHist();
+}
+CATS.forEach(function(cat){
+document.getElementById("f-"+cat).onsubmit=function(e){
+e.preventDefault();var i=document.getElementById("t-"+cat),v=i.value.trim();
+var n=tasks.filter(function(t){return catOf(t)===cat}).length;
+if(!v||n>=MAX)return;
+tasks.push({id:Date.now()+"-"+Math.random().toString(36).slice(2),text:v,done:false,cat:cat});i.value="";save();render();i.focus()};
+document.getElementById("clr-"+cat).onclick=function(){tasks=tasks.filter(function(t){return catOf(t)!==cat||!t.done});save();render()};
+});
+function renderHist(){
+var ul=document.getElementById("hlist");ul.innerHTML="";
+if(!hist.length){var p=document.createElement("div");p.className="empty";p.textContent="No completed tasks yet.";ul.appendChild(p)}
+hist.forEach(function(h){var li=document.createElement("li");var sp=document.createElement("span");sp.appendChild(document.createTextNode("✓ "+h.text));var sm=document.createElement("small");sm.textContent="Completed "+new Date(h.at).toLocaleString([],{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});sp.appendChild(sm);li.appendChild(sp);ul.appendChild(li)});
+document.getElementById("hsub").textContent=hist.length+" completed";
+document.getElementById("hc").textContent=hist.length?"("+hist.length+")":"";
+document.getElementById("hclr").style.display=hist.length?"":"none";
+}
+function showTab(h){document.getElementById("tasksView").hidden=h;document.getElementById("histView").hidden=!h;document.getElementById("tabT").className="tab"+(h?"":" on");document.getElementById("tabH").className="tab"+(h?" on":"")}
+document.getElementById("tabT").onclick=function(){showTab(false)};
+document.getElementById("tabH").onclick=function(){showTab(true)};
+document.getElementById("hclr").onclick=function(){hist=[];save();renderHist()};
+function tick(){var n=new Date();try{[["uk","Europe/London","en-GB",false],["bu","America/Los_Angeles","en-US",true],["ca","Africa/Cairo","en-GB",false]].forEach(function(z){document.getElementById(z[0]+"d").textContent=n.toLocaleDateString(z[2],{timeZone:z[1],weekday:"long",day:"numeric",month:"short"});document.getElementById(z[0]+"t").textContent=n.toLocaleTimeString(z[2],{timeZone:z[1],hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:z[3]})})}catch(e){}}
+tick();setInterval(tick,1000);
+var WX=[
+ {id:"caw",lat:30.0444,lon:31.2357,ukmo:false},
+ {id:"ukw",lat:51.5074,lon:-0.1278,ukmo:true},
+ {id:"buw",lat:34.1808,lon:-118.309,ukmo:false}
+];
+function wxDesc(c,day){
+ if(c===0)return day?["\u2600\ufe0f","Sunny"]:["\ud83c\udf19","Clear"];
+ if(c===1)return day?["\ud83c\udf24\ufe0f","Mostly sunny"]:["\ud83c\udf19","Mostly clear"];
+ if(c===2)return ["\u26c5","Partly cloudy"];
+ if(c===3)return ["\u2601\ufe0f","Overcast"];
+ if(c===45||c===48)return ["\ud83c\udf2b\ufe0f","Fog"];
+ if(c>=51&&c<=57)return ["\ud83c\udf26\ufe0f","Drizzle"];
+ if(c>=61&&c<=67)return ["\ud83c\udf27\ufe0f","Rain"];
+ if(c>=71&&c<=77)return ["\u2744\ufe0f","Snow"];
+ if(c>=80&&c<=82)return ["\ud83c\udf26\ufe0f","Showers"];
+ if(c===85||c===86)return ["\ud83c\udf28\ufe0f","Snow showers"];
+ if(c>=95)return ["\u26c8\ufe0f","Thunderstorm"];
+ return ["\u2601\ufe0f","Cloudy"];
+}
+function wxFetch(p,withModel){
+ var u="https://api.open-meteo.com/v1/forecast?latitude="+p.lat+"&longitude="+p.lon+
+  "&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1"+
+  (withModel?"&models=ukmo_seamless":"");
+ return fetch(u).then(function(r){if(!r.ok)throw new Error("http "+r.status);return r.json()});
+}
+function wxShow(p,d){
+ var el=document.getElementById(p.id);
+ var cur=d.current,day=d.daily;
+ var w=wxDesc(cur.weather_code,cur.is_day===1);
+ var rain=(day.precipitation_probability_max&&day.precipitation_probability_max[0]!=null)?Math.round(day.precipitation_probability_max[0])+"%":"n/a";
+ el.textContent=w[0]+" "+w[1]+", "+Math.round(cur.temperature_2m)+"\u00b0C";
+ var sm=document.createElement("small");
+ sm.textContent="High "+Math.round(day.temperature_2m_max[0])+"\u00b0 \u00b7 Low "+Math.round(day.temperature_2m_min[0])+"\u00b0 \u00b7 Rain "+rain;
+ el.appendChild(sm);
+}
+function loadWeather(){
+ var upd=document.getElementById("wupd"),btn=document.getElementById("wref");
+ btn.disabled=true;upd.textContent="Weather: updating\u2026";
+ var jobs=WX.map(function(p){
+  var first=wxFetch(p,p.ukmo);
+  if(p.ukmo){first=first.catch(function(){return wxFetch(p,false)})}
+  return first.then(function(d){wxShow(p,d);return true}).catch(function(){
+   var el=document.getElementById(p.id);
+   if(!el.firstChild||el.textContent.indexOf("Loading")===0)el.textContent="Weather unavailable";
+   return false});
+ });
+ Promise.all(jobs).then(function(r){
+  btn.disabled=false;
+  var ok=r.every(function(x){return x});
+  upd.textContent=(ok?"Weather updated ":"Weather partly updated ")+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})+" (London via Met Office model where available)";
+ });
+}
+
+var SPORTS=[
+ {icon:"\u26bd",name:"Premier League",espn:[["soccer/eng.1","Premier League"]]},
+ {icon:"\ud83c\udfc9",name:"Rugby union",espn:[["rugby/267979","Premiership"],["rugby/289234","International"],["rugby/17567","Nations Championship"]],
+  tsdb:"s=Rugby",re:/premiership|nations|autumn|six nations|international|world cup|champions cup|challenge cup|rugby championship/i},
+ {icon:"\ud83c\udfc9",name:"Rugby league",discover:"rugby-league"},
+ {icon:"\ud83c\udfaf",name:"Darts",note:"No free live darts feed is available. See the schedule above."}
+];
+function chk(r){if(!r.ok)throw new Error("http "+r.status);return r.json()}
+function sportsDate(){return new Date().toLocaleDateString("en-CA",{timeZone:"Europe/London"})}
+function espnGet(path,label,d){
+ return fetch("https://site.api.espn.com/apis/site/v2/sports/"+path+"/scoreboard?dates="+d.replace(/-/g,"")).then(chk).then(function(j){
+  return (j.events||[]).map(function(e){
+   var c=(e.competitions&&e.competitions[0])||{},cs=c.competitors||[];
+   var h=cs.filter(function(x){return x.homeAway==="home"})[0]||cs[0]||{};
+   var a=cs.filter(function(x){return x.homeAway==="away"})[0]||cs[1]||{};
+   var st=e.status&&e.status.type&&e.status.type.state;
+   var played=st&&st!=="pre";
+   return {strHomeTeam:(h.team&&h.team.displayName)||"",strAwayTeam:(a.team&&a.team.displayName)||"",
+    intHomeScore:played?h.score:null,intAwayScore:played?a.score:null,strTimestamp:e.date,strLeague:label||(j.leagues&&j.leagues[0]&&j.leagues[0].name)||"",strEvent:e.name};
+  });
+ });
+}
+function espnDiscover(sport,d){
+ return fetch("https://sports.core.api.espn.com/v2/sports/"+sport+"/leagues?limit=100").then(chk).then(function(j){
+  var ids=(j.items||[]).map(function(i){var m=/leagues\/(\d+)/.exec(i["$ref"]||"");return m&&m[1]}).filter(Boolean);
+  return Promise.all(ids.map(function(id){return espnGet(sport+"/"+id,null,d).catch(function(){return []})}));
+ }).then(function(parts){return [].concat.apply([],parts)});
+}
+function viaProxies(url){
+ var proxies=["https://api.allorigins.win/raw?url=","https://corsproxy.io/?url="];
+ var p=fetch(url).then(chk);
+ proxies.forEach(function(px){p=p.catch(function(){return fetch(px+encodeURIComponent(url)).then(chk)})});
+ return p;
+}
+function tsdbGet(q,d){
+ return viaProxies("https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d="+d+"&"+q).then(function(j){return j.events||[]});
+}
+function evTime(e){
+ var t=null;
+ if(e.strTimestamp){t=new Date(e.strTimestamp.replace(" ","T")+(/Z|[+-]\d\d:?\d\d$/.test(e.strTimestamp)?"":"Z"))}
+ else if(e.dateEvent&&e.strTime){t=new Date(e.dateEvent+"T"+e.strTime+"Z")}
+ if(!t||isNaN(t))return "";
+ return t.toLocaleTimeString("en-GB",{timeZone:"Europe/London",hour:"2-digit",minute:"2-digit"});
+}
+function evLine(e){
+ var who=(e.strHomeTeam&&e.strAwayTeam)?e.strHomeTeam+" v "+e.strAwayTeam:(e.strEvent||"Match");
+ var sc="";
+ if(e.intHomeScore!=null&&e.intAwayScore!=null&&e.intHomeScore!==""&&e.intAwayScore!==""){sc=" ("+e.intHomeScore+"\u2013"+e.intAwayScore+")"}
+ var tm=evTime(e);
+ return (tm?tm+"  ":"")+who+sc+(e.strLeague?" \u00b7 "+e.strLeague:"");
+}
+function tsdbFilter(sp,list){
+ return list.filter(function(e){return sp.re.test(e.strLeague||"")&&!/women|sevens|u\d\d/i.test(e.strLeague||"")});
+}
+function getSport(sp,d){
+ if(sp.note)return Promise.resolve({list:[],ok:true,note:sp.note});
+ if(sp.discover)return espnDiscover(sp.discover,d).then(function(l){return {list:l,ok:true}});
+ var tasks=(sp.espn||[]).map(function(x){
+  return espnGet(x[0],x[1],d).then(function(v){return {ok:true,v:v}},function(e){return {ok:false,e:e}});
+ });
+ return Promise.all(tasks).then(function(rs){
+  var good=rs.filter(function(r){return r.ok}),list=[];
+  good.forEach(function(r){list=list.concat(r.v)});
+  if(good.length&&(list.length||!sp.tsdb))return {list:list,ok:true};
+  if(!sp.tsdb){throw (rs[0]&&rs[0].e)||new Error("no source")}
+  return tsdbGet(sp.tsdb,d).then(function(l){return {list:tsdbFilter(sp,l),ok:true}},function(err){
+   if(good.length)return {list:[],ok:true};
+   throw err;
+  });
+ });
+}
+function loadSports(){
+ var btn=document.getElementById("sref"),upd=document.getElementById("supd"),box=document.getElementById("slive");
+ btn.disabled=true;upd.textContent="Updating\u2026";
+ var d=sportsDate();
+ var jobs=SPORTS.map(function(sp){
+  return getSport(sp,d).then(function(r){
+   r.list=r.list.filter(function(e){return !/women/i.test((e.strLeague||"")+" "+(e.strEvent||"")+" "+(e.strHomeTeam||"")+" "+(e.strAwayTeam||""))});
+   r.list.sort(function(a,b){return (evTime(a)||"").localeCompare(evTime(b)||"")});
+   return {sp:sp,list:r.list,ok:true,note:r.note};
+  }).catch(function(err){return {sp:sp,list:[],ok:false,err:(err&&err.message)||"blocked"}});
+ });
+ Promise.all(jobs).then(function(res){
+  box.innerHTML="";
+  var t=document.createElement("div");t.className="lt";t.textContent="Live today \u00b7 "+d;box.appendChild(t);
+  var anyOk=false;
+  res.forEach(function(r){
+   if(r.ok)anyOk=true;
+   var h=document.createElement("div");h.className="lh";h.textContent=r.sp.icon+" "+r.sp.name;box.appendChild(h);
+   if(!r.ok){var m=document.createElement("div");m.className="lm";m.textContent="Couldn\u2019t reach the feed ("+(r.err||"blocked")+")";box.appendChild(m);return}
+   if(r.note){var mn=document.createElement("div");mn.className="lm";mn.textContent=r.note;box.appendChild(mn);return}
+   if(!r.list.length){var m2=document.createElement("div");m2.className="lm";m2.textContent="Nothing listed today in the feed";box.appendChild(m2);return}
+   r.list.slice(0,12).forEach(function(e){var m3=document.createElement("div");m3.className="lm";m3.textContent=evLine(e);box.appendChild(m3)});
+  });
+  btn.disabled=false;
+  upd.textContent=(anyOk?"Updated ":"Feed unavailable, last tried ")+new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+ });
+}
+document.getElementById("sref").onclick=loadSports;
+loadSports();setInterval(loadSports,300000);
+document.getElementById("wref").onclick=loadWeather;
+loadWeather();setInterval(loadWeather,600000);
+
+render();
+</script>
+</body>
+</html>
